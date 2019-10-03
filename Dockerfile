@@ -11,4 +11,4 @@ RUN npm config set package-lock false
 RUN npm cache clean --force && npm install
 
 EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "dev" ]
