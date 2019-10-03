@@ -6,3 +6,7 @@ services:
     image: docker-node:latest
     ports: 
       - "3000:3000"
+    links:
+        - mongodb
+  mongodb:
+    image: mongo:latest
