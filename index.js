@@ -1,11 +1,11 @@
-const { findDocuments } = require("./handle");
+// const { findDocuments } = require("./handle");
 const app = require("express")();
-const MongoClient = require("mongodb").MongoClient;
+// const MongoClient = require("mongodb").MongoClient;
 require('dotenv').config();
 
-MongoClient.connect(process.env.DB_URL).then(connection => {
-  console.log(connection);
-});
+// MongoClient.connect(process.env.DB_URL).then(connection => {
+//   console.log(connection);
+// });
 
 // MongoClient.connect(process.env.DB_URL, function(err, client) {
 //   console.log("Connected successfully to server");
