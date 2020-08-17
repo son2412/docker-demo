@@ -1,12 +1,46 @@
-version: "3"
+version: "3.2"
 services:
-  node: 
+  nodejs:
     build: 
-      context: ./
-    image: docker-node:latest
-    ports: 
+      context: .
+    image: docker-demo/nodejs-mysql-app
+    networks:
+      - frontend
+      - backend
+    environment:
+      - MYSQL_HOST=mysql-app
+      - MYSQL_USER=root
+      - MYSQL_PASS=secret
+      - MYSQL_DB=test
+    volumes:
+      - ./www/:/var/www/html/
+    ports:
       - "3000:3000"
-    links:
-        - mongodb
-  mongodb:
-    image: mongo:latest
+    container_name: nodejs-app
+  mysql:
+    image: mysql:5.7
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=remote
+      - MYSQL_PASSWORD=secret
+      - MYSQL_DATABASE=test
+    container_name: mysql-app
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    depends_on:
+      - mysql
+    networks:
+      - backend
+    ports:
+      - "8802:80"
+    environment:
+      - PMA_HOST=mysql-app
+      - PMA_PORT= 3306
+    volumes:
+      - /sessions
+    container_name: phpmyadmin-app
+networks:
+  frontend:
+  backend:

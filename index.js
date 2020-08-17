@@ -1,21 +1,23 @@
-// const { findDocuments } = require("./handle");
+"use strict";
 const app = require("express")();
-// const MongoClient = require("mongodb").MongoClient;
-require('dotenv').config();
+const mysql = require("mysql");
+// require('dotenv').config();
+const connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST || "localhost",
+  port: process.env.MYSQL_PORT || "3306",
+  user: process.env.MYSQL_USER || "root",
+  password: process.env.MYSQL_PASS || "secret",
+  database: process.env.MYSQL_DB || "test",
+});
 
-// MongoClient.connect(process.env.DB_URL).then(connection => {
-//   console.log(connection);
-// });
-
-// MongoClient.connect(process.env.DB_URL, function(err, client) {
-//   console.log("Connected successfully to server");
-
-//   const db = client.db(process.env.DB_NAME);
-//   findDocuments(db, function() {
-//     client.close();
-//   });
-// });
+connection.connect(function (err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected with id: " + connection.threadId);
+});
 
 app.listen(3000, () => console.log("Server is running"));
 
-app.get("/", (req, res) => res.send("It works !!"));
+app.get("/", (req, res) => res.send("It works !!!"));
