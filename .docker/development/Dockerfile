@@ -1,8 +1,10 @@
 FROM node:carbon
 
+# ARG ROOT_FOLDER=./
+
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+# COPY ./package.json ./
 
 #RUN cp .env.example .env
 
